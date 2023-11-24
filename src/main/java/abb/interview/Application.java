@@ -1,9 +1,12 @@
 package abb.interview;
 
 import abb.interview.model.Direction;
+import abb.interview.model.Measurements;
 import abb.interview.model.dto.DeviceSummaryDto;
 import abb.interview.service.measurement.MeasurementService;
 import abb.interview.service.measurement.MeasurementServiceImpl;
+import abb.interview.service.print.PrintService;
+import abb.interview.service.print.PrintServiceImpl;
 import abb.interview.service.reporting.ReportingService;
 import abb.interview.service.reporting.ReportingServiceImpl;
 
@@ -16,30 +19,19 @@ public class Application {
 
     public static void main(String[] args) {
         MeasurementService measurementService = new MeasurementServiceImpl();
-        ReportingService reportingService = new ReportingServiceImpl(measurementService);
+        ReportingService reportingService = new ReportingServiceImpl();
+        PrintService printService = new PrintServiceImpl();
 
-        printAllMeasurements(measurementService);
-        printGroupTotals(reportingService);
-        printAllDevices(reportingService);
-    }
+        Measurements measurements = measurementService.getMeasurements();
 
-    private static void printAllMeasurements(MeasurementService measurementService) {
-        System.out.printf("\u001B[41m" +"Printing all recorded measurements:%n"+ "\u001B[0m");
-        measurementService.getMeasurements().values().forEach(System.out::println);
-    }
+        printService.printAllMeasurements(measurements);
 
-    private static void printGroupTotals(ReportingService reportingService) {
-        System.out.printf("\u001B[41m" +"Printing group totals:%n"+ "\u001B[0m");
-        System.out.printf("Group total for group a with direction IN: %s%n", reportingService.getGroupTotals("group_a", Direction.IN));
-        System.out.printf("Group total for group a with direction OUT: %s%n", reportingService.getGroupTotals("group_a", Direction.OUT));
-        System.out.printf("Group total for group b with direction IN: %s%n", reportingService.getGroupTotals("group_b", Direction.IN));
-        System.out.printf("Group total for group b with direction IN: %s%n", reportingService.getGroupTotals("group_b", Direction.OUT));
-    }
+        printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_a", Direction.IN));
+        printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_a", Direction.OUT));
+        printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_b", Direction.IN));
+        printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_b", Direction.OUT));
 
-    private static void printAllDevices(ReportingService reportingService) {
-        System.out.printf("\u001B[41m" + "Printing all devices:%n" + "\u001B[0m");
-        List<DeviceSummaryDto> devicesSummary = reportingService.getDevicesSummary();
-        devicesSummary.forEach(System.out::println);
+        printService.printAllDevices(reportingService.getDevicesSummary(measurements));
     }
 
 }

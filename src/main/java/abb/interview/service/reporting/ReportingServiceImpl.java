@@ -2,6 +2,7 @@ package abb.interview.service.reporting;
 
 import abb.interview.model.Direction;
 import abb.interview.model.Measurement;
+import abb.interview.model.Measurements;
 import abb.interview.model.Power;
 import abb.interview.model.dto.DeviceSummaryDto;
 import abb.interview.model.dto.GroupTotalsDto;
@@ -15,15 +16,9 @@ import java.util.stream.Collectors;
 
 public class ReportingServiceImpl implements ReportingService {
 
-    MeasurementService measurementService;
-
-    public ReportingServiceImpl(MeasurementService measurementService) {
-        this.measurementService = measurementService;
-    }
-
     @Override
-    public GroupTotalsDto getGroupTotals(String group, Direction direction) {
-        List<Measurement> measurements = measurementService.getMeasurements()
+    public GroupTotalsDto getGroupTotals(Measurements measurements, String group, Direction direction) {
+        List<Measurement> measurementsForGroupAndDirection = measurements
                 .values()
                 .stream()
                 .filter(entry -> group.equals(entry.getDeviceGroup()) && direction.equals(entry.getDirection()))
@@ -31,15 +26,15 @@ public class ReportingServiceImpl implements ReportingService {
 
         return new GroupTotalsDto(group,
                 direction,
-                getTotal(measurements, Power::getMin),
-                getTotal(measurements, Power::getMax),
-                getTotal(measurements, Power::getAvg)
+                getTotal(measurementsForGroupAndDirection, Power::getMin),
+                getTotal(measurementsForGroupAndDirection, Power::getMax),
+                getTotal(measurementsForGroupAndDirection, Power::getAvg)
                 );
     }
 
     @Override
-    public List<DeviceSummaryDto> getDevicesSummary() {
-        return measurementService.getMeasurements()
+    public List<DeviceSummaryDto> getDevicesSummary(Measurements measurements) {
+        return measurements
                 .values()
                 .stream()
                 .map(measurement -> new DeviceSummaryDto(

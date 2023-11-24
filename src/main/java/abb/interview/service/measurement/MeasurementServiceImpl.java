@@ -1,6 +1,6 @@
 package abb.interview.service.measurement;
 
-import abb.interview.exception.DataException;
+import abb.interview.exception.MeasurementsException;
 import abb.interview.model.Measurement;
 import abb.interview.model.Measurements;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,7 +34,7 @@ public class MeasurementServiceImpl implements MeasurementService {
                     .forEach(measurement -> measurements.put(measurement.getKey(), measurement));
         } catch (IOException e) {
             log.error("Failed to load measurements", e);
-            throw new DataException("Failed to load measurements");
+            throw new MeasurementsException("Failed to load measurements", e);
         }
 
         return measurements;
