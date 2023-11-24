@@ -1,4 +1,4 @@
-package abb.interview.domain;
+package abb.interview.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -35,4 +35,14 @@ public class Key {
         result = 31 * result + (deviceGroup != null ? deviceGroup.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Key{" +
+                "resourceId='" + resourceId + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceGroup='" + deviceGroup + '\'' +
+                '}';
+    }
+
 }

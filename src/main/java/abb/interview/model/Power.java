@@ -1,4 +1,4 @@
-package abb.interview.domain;
+package abb.interview.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -54,5 +54,15 @@ public class Power {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Power{" +
+                "min=" + min +
+                ", max=" + max +
+                ", avg=" + avg +
+                ", timestamp=" + timestamp +
+                '}';
     }
 }

@@ -1,4 +1,4 @@
-package abb.interview.domain;
+package abb.interview.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -61,5 +61,16 @@ public class Measurement {
 
     public Key getKey() {
         return new Key(resourceId,deviceName,deviceGroup);
+    }
+
+    @Override
+    public String toString() {
+        return "Measurement{" +
+                "resourceId='" + resourceId + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceGroup='" + deviceGroup + '\'' +
+                ", direction=" + direction +
+                ", power=" + power +
+                '}';
     }
 }

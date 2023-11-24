@@ -1,4 +1,4 @@
-package abb.interview.domain;
+package abb.interview.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
