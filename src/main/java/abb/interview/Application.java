@@ -2,7 +2,6 @@ package abb.interview;
 
 import abb.interview.model.Direction;
 import abb.interview.model.Measurements;
-import abb.interview.model.dto.DeviceSummaryDto;
 import abb.interview.service.measurement.MeasurementService;
 import abb.interview.service.measurement.MeasurementServiceImpl;
 import abb.interview.service.print.PrintService;
@@ -11,7 +10,6 @@ import abb.interview.service.reporting.ReportingService;
 import abb.interview.service.reporting.ReportingServiceImpl;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class Application {
 
@@ -24,13 +22,16 @@ public class Application {
 
         Measurements measurements = measurementService.getMeasurements();
 
+        //1
         printService.printAllMeasurements(measurements);
 
+        //2
         printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_a", Direction.IN));
         printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_a", Direction.OUT));
         printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_b", Direction.IN));
         printService.printGroupTotals(reportingService.getGroupTotals(measurements,"group_b", Direction.OUT));
 
+        //3
         printService.printAllDevices(reportingService.getDevicesSummary(measurements));
     }
 

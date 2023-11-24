@@ -6,7 +6,6 @@ import abb.interview.model.Measurements;
 import abb.interview.model.Power;
 import abb.interview.model.dto.DeviceSummaryDto;
 import abb.interview.model.dto.GroupTotalsDto;
-import abb.interview.service.measurement.MeasurementService;
 
 import java.util.Comparator;
 import java.util.List;
