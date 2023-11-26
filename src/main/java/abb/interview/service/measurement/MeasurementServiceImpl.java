@@ -29,8 +29,7 @@ public class MeasurementServiceImpl implements MeasurementService {
         Measurements measurements = new Measurements();
 
         try {
-            objectMapper.readValue(new URL("file:src/main/resources/measurements.json"), new TypeReference<List<Measurement>>() {
-                    })
+            loadMeasurementsFromJson()
                     .forEach(measurement -> measurements.put(measurement.getKey(), measurement));
         } catch (IOException e) {
             log.error("Failed to load measurements", e);
@@ -38,6 +37,10 @@ public class MeasurementServiceImpl implements MeasurementService {
         }
 
         return measurements;
+    }
+
+    private List<Measurement> loadMeasurementsFromJson() throws IOException {
+        return objectMapper.readValue(new URL("file:src/main/resources/measurements.json"), new TypeReference<>(){});
     }
 
 }
